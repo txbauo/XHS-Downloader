@@ -46,15 +46,15 @@ class Index(Screen):
     def compose(self) -> ComposeResult:
         yield Header()
         yield ScrollableContainer(
-            Label(Text(_("开源协议: ") + LICENCE, style=MASTER)),
-            Link(
-                Text(
-                    _("项目地址: ") + REPOSITORY,
-                    style=MASTER,
-                ),
-                url=REPOSITORY,
-                tooltip=_("点击访问"),
-            ),
+            # Label(Text(_("开源协议: ") + LICENCE, style=MASTER)),
+            # Link(
+            #     Text(
+            #         _("项目地址: ") + REPOSITORY,
+            #         style=MASTER,
+            #     ),
+            #     url=REPOSITORY,
+            #     tooltip=_("点击访问"),
+            # ),
             Label(
                 Text(_("请输入小红书图文/视频作品链接"), style=PROMPT),
                 classes="prompt",
@@ -74,16 +74,26 @@ class Index(Screen):
         yield Footer()
 
     def on_mount(self) -> None:
+        # self.title = PROJECT
+        # self.url = self.query_one(Input)
+        # self.tip = self.query_one(RichLog)
+        # self.tip.write(
+        #     Text(_("免责声明\n") + f"\n{'>' * 50}", style=MASTER),
+        #     scroll_end=True,
+        # )
+        # self.xhs.manager.print_proxy_tip(
+        #     log=self.tip,
+        # )
         self.title = PROJECT
         self.url = self.query_one(Input)
         self.tip = self.query_one(RichLog)
-        self.tip.write(
-            Text(_("免责声明\n") + f"\n{'>' * 50}", style=MASTER),
-            scroll_end=True,
-        )
-        self.xhs.manager.print_proxy_tip(
-            log=self.tip,
-        )
+        # self.tip.write(
+        #     Text(_("免责声明\n") + f"\n{'>' * 50}", style=MASTER),
+        #     scroll_end=True,
+        # )
+        # self.xhs.manager.print_proxy_tip(
+        #     log=self.tip,
+        # )
 
     @on(Button.Pressed, "#deal")
     async def deal_button(self):
