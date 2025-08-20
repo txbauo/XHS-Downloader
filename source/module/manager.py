@@ -16,6 +16,10 @@ from source.expansion import remove_empty_directories
 from ..translation import _
 from .static import HEADERS, USERAGENT, WARNING
 from .tools import logging
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..expansion import Cleaner
 
 __all__ = ["Manager"]
 
@@ -67,11 +71,14 @@ class Manager:
         author_archive: bool,
         write_mtime: bool,
         _print: bool,
+        cleaner: "Cleaner",
     ):
         self.root = root
-        self.temp = root.joinpath("./temp")
+        self.cleaner = cleaner
+        self.temp = root.joinpath("Temp")
         self.path = self.__check_path(path)
         self.folder = self.__check_folder(folder)
+        self.compatible()
         self.blank_headers = HEADERS | {
             "user-agent": user_agent or USERAGENT,
         }
@@ -119,6 +126,7 @@ class Manager:
         self.live_download = self.check_bool(live_download, True)
         self.author_archive = self.check_bool(author_archive, False)
         self.write_mtime = self.check_bool(write_mtime, False)
+        self.create_folder()
 
     def __check_path(self, path: str) -> Path:
         if not path:
@@ -128,15 +136,13 @@ class Manager:
         return r if (r := self.__check_root_again(r)) else self.root
 
     def __check_folder(self, folder: str) -> Path:
-        folder = self.path.joinpath(folder or "Download")
-        folder.mkdir(exist_ok=True)
-        self.temp.mkdir(exist_ok=True)
-        return folder
+        folder = self.cleaner.filter_name(folder, default="Download")
+        return self.path.joinpath(folder)
 
     @staticmethod
     def __check_root_again(root: Path) -> bool | Path:
-        if root.resolve().parent.is_dir():
-            root.mkdir()
+        if root.parent.is_dir():
+            root.mkdir(exist_ok=True)
             return root
         return False
 
@@ -269,3 +275,15 @@ class Manager:
         cookie_string = sub(r";\s*$", "", cookie_string)  # 删除末尾的分号和空格
         cookie_string = sub(r";\s*;", ";", cookie_string)  # 删除中间多余分号后的空格
         return cookie_string.strip("; ")
+
+    def create_folder(
+        self,
+    ):
+        self.folder.mkdir(exist_ok=True)
+        self.temp.mkdir(exist_ok=True)
+
+    def compatible(self,):
+        if self.path == self.root and (
+            old := self.path.parent.joinpath(self.folder.name)
+        ).exists() and not self.folder.exists():
+            move(old, self.folder)

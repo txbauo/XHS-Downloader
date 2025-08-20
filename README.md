@@ -19,13 +19,14 @@
 <br>
 <p>🔥 <b>小红书链接提取/作品采集工具</b>：提取账号发布、收藏、点赞、专辑作品链接；提取搜索结果作品链接、用户链接；采集小红书作品信息；提取小红书作品下载地址；下载小红书无水印作品文件！</p>
 <p>🔥 “小红书”、“XiaoHongShu”、“RedNote” 含义相同，本项目统称为 “小红书”</p>
-<p>⭐ 本项目完全免费开源，无任何收费功能，请勿上当受骗！</p>
 <h1>📑 项目功能</h1>
+<details>
+<summary>项目程序与用户脚本功能清单（点击展开）</summary>
 <ul><b>程序功能</b>
 <li>✅ 采集小红书作品信息</li>
 <li>✅ 提取小红书作品下载地址</li>
 <li>✅ 下载小红书无水印作品文件</li>
-<li>✅ 下载小红书 livePhoto 文件(非无水印)</li>
+<li>✅ 下载小红书 livePhoto 文件(含水印)</li>
 <li>✅ 自动跳过已下载的作品文件</li>
 <li>✅ 作品文件完整性处理机制</li>
 <li>✅ 自定义图文作品文件下载格式</li>
@@ -37,6 +38,7 @@
 <li>✅ 从浏览器读取 Cookie</li> 
 <li>✅ 自定义文件名称格式</li> 
 <li>✅ 支持 API 调用功能</li>
+<li>✅ 支持 MCP 调用功能</li>
 <li>✅ 支持文件断点续传下载</li>
 <li>✅ 智能识别作品文件类型</li>
 <li>✅ 支持设置作者备注</li>
@@ -52,18 +54,19 @@
 <li>✅ 提取搜索结果作品链接</li>
 <li>✅ 提取搜索结果用户链接</li>
 </ul>
-<p>⭐ XHS-Downloader 开发计划及进度可前往 <a href="https://github.com/users/JoeanAmier/projects/5">Projects</a> 查阅</p>
+</details>
 <h1>📸 程序截图</h1>
-<p><b>🎥 点击图片观看演示视频</b></p>
-<a href="https://www.bilibili.com/video/BV1v1LwzsEi9/"><img src="static/screenshot/程序运行截图CN1.png" alt=""></a>
+<p><a href="https://www.bilibili.com/video/BV1Fcb3zWEjt/">前往 bilibili 观看演示</a>；<a href="https://youtu.be/VIjDytHaopg">前往 YouTube 观看演示</a></p>
+<img src="static/screenshot/程序运行截图CN1.png" alt="">
 <hr>
-<a href="https://www.bilibili.com/video/BV1v1LwzsEi9/"><img src="static/screenshot/程序运行截图CN2.png" alt=""></a>
+<img src="static/screenshot/程序运行截图CN2.png" alt="">
 <hr>
-<a href="https://www.bilibili.com/video/BV1v1LwzsEi9/"><img src="static/screenshot/程序运行截图CN3.png" alt=""></a>
+<img src="static/screenshot/程序运行截图CN3.png" alt="">
 <h1>🔗 支持链接</h1>
 <ul>
 <li><code>https://www.xiaohongshu.com/explore/作品ID?xsec_token=XXX</code></li>
 <li><code>https://www.xiaohongshu.com/discovery/item/作品ID?xsec_token=XXX</code></li>
+<li><code>https://www.xiaohongshu.com/user/profile/作者ID/作品ID?xsec_token=XXX</code></li>
 <li><code>https://xhslink.com/分享码</code></li>
 <br/>
 <p><b>支持单次输入多个作品链接，链接之间使用空格分隔；程序会自动提取有效链接，无需额外处理！</b></p>
@@ -78,7 +81,10 @@
 <p>⭐ 本项目包含自动构建可执行文件的 GitHub Actions，使用者可以随时使用 GitHub Actions 将最新源码构建为可执行文件！</p>
 <p>⭐ 自动构建可执行文件教程请查阅本文档的 <code>构建可执行文件指南</code> 部分；如果需要更加详细的图文教程，请 <a href="https://mp.weixin.qq.com/s/TorfoZKkf4-x8IBNLImNuw">查阅文章</a>！</p>
 <p><strong>注意：Mac OS 平台可执行文件 <code>main</code> 可能需要从终端命令行启动；受设备限制，Mac OS 平台可执行文件尚未经过测试，无法保证可用性！</strong></p>
-<p>若通过此方式使用程序，文件默认下载路径为：<code>.\_internal\Download</code>；配置文件路径为：<code>.\_internal\settings.json</code></p>
+<p>若通过此方式使用程序，文件默认下载路径为：<code>.\_internal\Volume\Download</code>；配置文件路径为：<code>.\_internal\Volume\settings.json</code></p>
+<h3>程序更新</h3>
+<p><strong>方案一：</strong>下载并解压文件，将旧版本的 <code>_internal\Volume</code> 文件夹复制到新版本的 <code>_internal</code> 文件夹。</p>
+<p><strong>方案二：</strong>下载并解压文件（不要运行程序），复制全部文件，直接覆盖旧版本文件。</p>
 <h2>⌨️ Docker 运行</h2>
 <ol>
 <li>获取镜像</li>
@@ -89,8 +95,10 @@
 </ul>
 <li>创建容器</li>
 <ul>
-<li>TUI 模式：<code>docker run --name 容器名称(可选) -p 主机端口号:5556 -v xhs_downloader_volume:/app -it joeanamier/xhs-downloader</code></li>
-<li>API 模式：<code>docker run --name 容器名称(可选) -p 主机端口号:5556 -v xhs_downloader_volume:/app -it joeanamier/xhs-downloader python main.py server</code></li>
+<li>TUI 模式：<code>docker run --name 容器名称(可选) -p 主机端口号:5556 -v xhs_downloader_volume:/app/Volume -it &lt;镜像名称&gt;</code></li>
+<li>API 模式：<code>docker run --name 容器名称(可选) -p 主机端口号:5556 -v xhs_downloader_volume:/app/Volume -it &lt;镜像名称&gt; python main.py api</code></li>
+<li>MCP 模式：<code>docker run --name 容器名称(可选) -p 主机端口号:5556 -v xhs_downloader_volume:/app/Volume -it &lt;镜像名称&gt; python main.py mcp</code></li>
+<br><b>注意：</b>此处的 <code>&lt;镜像名称&gt;</code> 需与您在第一步中使用的镜像名称保持一致（<code>joeanamier/xhs-downloader</code> 或 <code>ghcr.io/joeanamier/xhs-downloader</code>）
 </ul>
 <li>运行容器
 <ul>
@@ -112,6 +120,7 @@
 </ol>
 <h1>🛠 命令行模式</h1>
 <p>项目支持命令行运行模式，若想要下载图文作品的部分图片，可以使用此模式设置需要下载的图片序号！</p>
+<p><strong>注意：</strong>未设置 <code>--index</code> 参数时，支持传入多个作品链接，全部链接需要使用引号包围，链接之间使用空格分隔；已设置 <code>--index</code> 参数时，不支持传入多个作品链接，即使传入多个作品链接，程序仅处理首个作品链接！</p>
 <p>可以使用命令行 <b>从浏览器读取 Cookie 并写入配置文件！</b></p>
 <p>命令示例：<code>python .\main.py --browser_cookie Chrome --update_settings</code></p>
 <p><code>bool</code> 类型参数支持使用 <code>true</code>、<code>false</code>、<code>1</code>、<code>0</code>、<code>yes</code>、<code>no</code>、<code>on</code> 或 <code>off</code>（不区分大小写）来设置。</p>
@@ -120,10 +129,12 @@
 <hr>
 <img src="static/screenshot/命令行模式截图CN2.png" alt="">
 <h1>🖥 服务器模式</h1>
-<p><b>启动：</b>运行命令：<code>python .\main.py server</code></p>
+<p>服务器模式包含 API 模式和 MCP 模式！</p>
+<h2>API 模式</h2>
+<p><b>启动：</b>运行命令：<code>python .\main.py api</code></p>
 <p><b>关闭：</b>按下 <code>Ctrl</code> + <code>C</code> 关闭服务器</p>
 <p>访问 <code>http://127.0.0.1:5556/docs</code> 或者 <code>http://127.0.0.1:5556/redoc</code>；你会看到自动生成的交互式 API 文档！</p>
-<p><b>请求接口：</b><code>/xhs/</code></p>
+<p><b>请求接口：</b><code>/xhs/detail</code></p>
 <p><b>请求方法：</b><code>POST</code></p>
 <p><b>请求格式：</b><code>JSON</code></p>
 <p><b>请求参数：</b></p>
@@ -179,7 +190,7 @@
 <pre>
 async def example_api():
     """通过 API 设置参数，适合二次开发"""
-    server = "http://127.0.0.1:5556/xhs/"
+    server = "http://127.0.0.1:5556/xhs/detail"
     data = {
         "url": "",  # 必需参数
         "download": True,
@@ -193,22 +204,50 @@ async def example_api():
     response = post(server, json=data, timeout=10)
     print(response.json())
 </pre>
+<h2>MCP 模式</h2>
+<p><b>启动：</b>运行命令：<code>python .\main.py mcp</code></p>
+<p><b>关闭：</b>按下 <code>Ctrl</code> + <code>C</code> 关闭服务器</p>
+<h3>MCP 配置示例</h3>
+
+[//]: # (<h4>STDIO</h4>)
+<h4>Streamable HTTP</h4>
+<p><b>MCP URL：</b><code>http://127.0.0.1:5556/mcp/</code></p>
+<img src="static/screenshot/MCP配置示例.png" alt="MCP配置示例">
+<h3>MCP 调用示例</h3>
+<details>
+<summary>MCP 功能及调用示例（点击展开）</summary>
+<h4><strong>获取小红书作品信息</strong></h4>
+<img src="static/screenshot/MCP获取数据.png" alt="MCP获取数据">
+<hr>
+<h4><strong>下载小红书作品文件</strong></h4>
+<p>下载图文作品时可以指定需要下载的图片序号；默认不返回作品信息，如需返回作品信息，请在对话时明确表述。</p>
+<img src="static/screenshot/MCP下载文件1.png" alt="MCP下载文件">
+<hr>
+<img src="static/screenshot/MCP下载文件2.png" alt="MCP下载文件">
+</details>
 <h1>📜 其他说明</h1>
 <ul>
 <li>由于作品链接携带日期信息，使用先前日期获取的作品链接可能会被风控，建议下载作品文件时使用最新获取的作品链接</li>
 <li>Windows 系统需要以管理员身份运行程序才能读取 Chromium、Chrome、Edge 浏览器 Cookie</li>
-<li>如果开启保存作品数据至文件功能，作品数据默认储存至 <code>./Download/ExploreData.db</code> 文件</li>
-<li>程序下载记录数据储存至 <code>./ExploreID.db</code> 文件</li>
+<li>如果开启保存作品数据至文件功能，作品数据默认储存至 <code>./Volume/Download/ExploreData.db</code> 文件</li>
+<li>程序下载记录数据储存至 <code>./Volume/ExploreID.db</code> 文件</li>
+<li>为了避免请求频率过高对平台服务器造成影响，本项目内置请求延时机制</li>
 </ul>
 <h1 id="user-scripts">🕹 用户脚本</h1>
-<p>如果您的浏览器安装了 <a href="https://www.tampermonkey.net/">Tampermonkey</a> 浏览器扩展程序，可以添加 <a href="https://raw.githubusercontent.com/JoeanAmier/XHS-Downloader/master/static/XHS-Downloader.js">用户脚本</a>(右键单击复制链接)，无需下载安装即可体验项目功能！</p>
+<p>如果您的浏览器安装了 <a href="https://www.tampermonkey.net/">Tampermonkey</a> 浏览器扩展程序，可以使用用户脚本体验项目功能！</p>
+<p>用户脚本链接（右键单击复制链接）：<a href="https://raw.githubusercontent.com/JoeanAmier/XHS-Downloader/refs/heads/master/static/XHS-Downloader.js">master 分支</a>、<a href="https://raw.githubusercontent.com/JoeanAmier/XHS-Downloader/refs/heads/develop/static/XHS-Downloader.js">develop 分支</a></p>
 <img src="static/screenshot/脚本安装教程.png" alt="">
 <hr>
+<details>
+<summary>查看 Tampermonkey 用户脚本截图（点击展开）</summary>
 <img src="static/screenshot/用户脚本截图1.png" alt="">
 <hr>
 <img src="static/screenshot/用户脚本截图2.png" alt="">
 <hr>
 <img src="static/screenshot/用户脚本截图3.png" alt="">
+<hr>
+<img src="static/screenshot/用户脚本截图4.png" alt="">
+</details>
 <p>提示：使用 XHS-Downloader 用户脚本批量提取作品链接，搭配 XHS-Downloader 程序可以实现批量下载无水印作品文件！</p>
 <h2>📜 脚本说明</h2>
 <ul>
@@ -230,7 +269,6 @@ async def example():
     """通过代码设置参数，适合二次开发"""
     # 示例链接
     demo_link = "https://www.xiaohongshu.com/explore/XXX?xsec_token=XXX"
-
     # 实例对象
     work_path = "D:\\"  # 作品数据/文件保存根路径，默认值：项目根路径
     folder_name = "Download"  # 作品文件储存文件夹名称（自动创建），默认值：Download
@@ -244,7 +282,7 @@ async def example():
     record_data = False  # 是否保存作品数据至文件
     image_format = "WEBP"  # 图文作品文件下载格式，支持：AUTO、PNG、WEBP、JPEG、HEIC
     folder_mode = False  # 是否将每个作品的文件储存至单独的文件夹
-    image_download = True  # 图文作品文件下载开关
+    image_download = True  # 图文、图集作品文件下载开关
     video_download = True  # 视频作品文件下载开关
     live_download = False  # 图文动图文件下载开关
     download_record = True  # 是否记录下载成功的作品 ID
@@ -252,10 +290,8 @@ async def example():
     author_archive = True  # 是否将每个作者的作品存至单独的文件夹
     write_mtime = True  # 是否将作品文件的 修改时间 修改为作品的发布时间
     read_cookie = None  # 读取浏览器 Cookie，支持设置浏览器名称（字符串）或者浏览器序号（整数），设置为 None 代表不读取
-
     # async with XHS() as xhs:
     #     pass  # 使用默认参数
-
     async with XHS(
         work_path=work_path,
         folder_name=folder_name,
@@ -322,7 +358,7 @@ async def example():
 <td align="center">work_path</td>
 <td align="center">str</td>
 <td align="center">作品数据 / 文件保存根路径</td>
-<td align="center">项目根路径</td>
+<td align="center">项目根路径/Volume</td>
 </tr>
 <tr>
 <td align="center">folder_name</td>
@@ -387,7 +423,7 @@ async def example():
 <tr>
 <td align="center">image_download</td>
 <td align="center">bool</td>
-<td align="center">图文作品文件下载开关</td>
+<td align="center">图文、图集作品文件下载开关</td>
 <td align="center">true</td>
 </tr>
 <tr>
@@ -461,8 +497,9 @@ async def example():
 <h1>🗳 下载记录</h1>
 <p>XHS-Downloader 会将下载过的作品 ID 储存至数据库，当重复下载相同的作品时，XHS-Downloader 会自动跳过该作品的文件下载（即使作品文件不存在），如果想要重新下载作品文件，请先删除数据库中对应的作品 ID，再使用 XHS-Downloader 下载作品文件！</p>
 <p>该功能默认开启，如果关闭该功能，XHS-Downloader 会检查文件是否存在，若文件存在则跳过下载！</p>
-
-# 📦 构建可执行文件指南
+<h2>构建可执行文件指南</h2>
+<details>
+<summary><b>构建可执行文件指南（点击展开）</b></summary>
 
 本指南将引导您通过 Fork 本仓库并执行 GitHub Actions 自动完成基于最新源码的程序构建和打包！
 
@@ -544,6 +581,7 @@ A:
 
 A: 由于权限限制，您无法直接触发主仓库的 Actions。请通过 Fork 仓库的方式执行打包流程
 
+</details>
 <h1>⭐ Star 趋势</h1>
 <p>
 <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=JoeanAmier/XHS-Downloader&amp;type=Timeline"/>
@@ -599,18 +637,16 @@ A: 由于权限限制，您无法直接触发主仓库的 Actions。请通过 Fo
 
 # 💰 项目赞助
 
-## JetBrains 工具
-
-![PyCharm logo](https://resources.jetbrains.com/storage/products/company/brand/logos/PyCharm.svg)
-
-**JetBrains** 支持全球开源社区认可的活跃项目，并为非商业开发提供免费许可证。
-
-***
-
 ## DartNode
 
 [![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
 
+***
+
+## ZMTO
+
+<a href="https://www.zmto.com/"><img src="https://console.zmto.com/templates/2019/dist/images/logo_dark.svg" alt="ZMTO"></a>
+<p><a href="https://www.zmto.com/">ZMTO</a>：一家专业的云基础设施提供商，以可靠的尖端技术与专业支持，提供高效的解决方案，并为符合条件的开源项目提供企业级VPS基础设施，支持开源生态系统的可持续发展与创新。</p>
 <h1>⚠️ 免责声明</h1>
 <ol>
 <li>使用者对本项目的使用由使用者自行决定，并自行承担风险。作者对使用者使用本项目所产生的任何损失、责任、或风险概不负责。</li>
@@ -638,6 +674,7 @@ A: 由于权限限制，您无法直接触发主仓库的 Actions。请通过 Fo
 * https://github.com/encode/httpx/
 * https://github.com/tiangolo/fastapi
 * https://github.com/textualize/textual/
+* https://github.com/jlowin/fastmcp
 * https://github.com/omnilib/aiosqlite
 * https://github.com/thewh1teagle/rookie
 * https://github.com/carpedm20/emoji/

@@ -19,14 +19,15 @@
 <br>
 <p>🔥 <b>RedNote Link Extraction/Content Collection Tool</b>：Extract account-published, favorites, and liked works links; extract search result works links and user links; collect RedNote works information; extract RedNote works download addresses; download RedNote watermark-free works files!</p>
 <p>🔥 "RedNote", "XiaoHongShu" and "小红书" have the same meaning, and this project is collectively referred to as "RedNote".</p>
-<p>⭐ This project is completely free and open-source, with no paid features. Please do not be deceived!</p>
 <p>⭐ Due to the author's limited energy, I was unable to update the English document in a timely manner, and the content may have become outdated, partial translation is machine translation, the translation result may be incorrect, Suggest referring to Chinese documentation. If you want to contribute to translation, we warmly welcome you.</p>
 <h1>📑 Project Features</h1>
+<details>
+<summary>Program Features and User Script Features (Click to Expand)</summary>
 <ul><b>Program Features</b>
 <li>✅ Collect RedNote works information</li>
 <li>✅ Extract RedNote works download addresses</li>
 <li>✅ Download RedNote watermark-free works files</li>
-<li>✅ Download RedNote livePhoto files (non-watermark-free)</li>
+<li>✅ Download RedNote livePhoto files (watermark)</li>
 <li>✅ Automatically skip already downloaded works files</li>
 <li>✅ works file integrity handling mechanism</li>
 <li>✅ Customizable image works file download format</li>
@@ -38,6 +39,7 @@
 <li>✅ Read cookies from browser</li>
 <li>✅ Customizable file name format</li>
 <li>✅ Support API call functionality</li>
+<li>✅ Support MCP call functionality</li>
 <li>✅ Support file breakpoint resume download</li>
 <li>✅ Intelligent recognition of works file types</li>
 <li>✅ Supports author alias configuration</li>
@@ -53,18 +55,19 @@
 <li>✅ Extract search result works links</li>
 <li>✅ Extract search result user links</li>
 </ul>
-<p>⭐ The development plan and progress of XHS-Downloader can be found at <a href="https://github.com/users/JoeanAmier/projects/5">Projects</a></p>
+</details>
 <h1>📸 Program Screenshots</h1>
-<p><b>🎥 Click the images to watch the demo video</b></p>
-<a href="https://www.bilibili.com/video/BV1v1LwzsEi9/"><img src="static/screenshot/程序运行截图EN1.png" alt=""></a>
+<p><a href="https://www.bilibili.com/video/BV1Fcb3zWEjt/">Watch Demo on Bilibili</a>；<a href="https://youtu.be/VIjDytHaopg">Watch Demo on YouTube</a></p>
+<img src="static/screenshot/程序运行截图EN1.png" alt="">
 <hr>
-<a href="https://www.bilibili.com/video/BV1v1LwzsEi9/"><img src="static/screenshot/程序运行截图EN2.png" alt=""></a>
+<img src="static/screenshot/程序运行截图EN2.png" alt="">
 <hr>
-<a href="https://www.bilibili.com/video/BV1v1LwzsEi9/"><img src="static/screenshot/程序运行截图EN3.png" alt=""></a>
+<img src="static/screenshot/程序运行截图EN3.png" alt="">
 <h1>🔗 Supported Links</h1>
 <ul>
 <li><code>https://www.xiaohongshu.com/explore/WorksID?xsec_token=XXX</code></li>
 <li><code>https://www.xiaohongshu.com/discovery/item/WorksID?xsec_token=XXX</code></li>
+<li><code>https://www.xiaohongshu.com/user/profile/AuthorID/WorksID?xsec_token=XXX</code></li>
 <li><code>https://xhslink.com/ShareCode</code></li>
 <br/>
 <p><b>Supports entering multiple works links at once, separated by spaces; the program will automatically extract valid links without additional processing!</b></p>
@@ -79,7 +82,10 @@
 <p>⭐ This project includes GitHub Actions for automatic building executable files. Users can use GitHub Actions to build the latest source code into executable files at any time!</p>
 <p>⭐ For the automatic building executable files tutorial, please refer to the <code>Build of Executable File Guide</code> section of this document. If you need a more detailed step-by-step tutorial with illustrations, please <a href="https://mp.weixin.qq.com/s/TorfoZKkf4-x8IBNLImNuw">check out this article</a>!</p>
 <p><strong>Note: The executable file <code>main</code> for Mac OS may need to be launched from the terminal command line; Due to device limitations, the Mac OS executable file has not been tested and its availability cannot be guaranteed!</strong></p>
-<p>If you use the program in this way, the default download path for files is: <code>.\_internal\Download</code>; the configuration file path is: <code>.\_internal\settings.json</code></p>
+<p>If you use the program in this way, the default download path for files is: <code>.\_internal\Volume\Download</code>; the configuration file path is: <code>.\_internal\Volume\settings.json</code></p>
+<h3>Update Methods</h3>
+<p><strong>Method 1:</strong> Download and extract the files, then copy the old version of the <code>_internal\Volume</code> folder into the new version's <code>_internal</code> folder.</p>
+<p><strong>Method 2:</strong> Download and extract the files (do not run the program), then copy all files and directly overwrite the old version.</p>
 <h2>⌨️ Docker Run</h2>
 <ol>
 <li>Get Image</li>
@@ -90,8 +96,10 @@
 </ul>
 <li>Create Container</li>
 <ul>
-<li>TUI Mode: <code>docker run --name ContainerName(optional) -p HostPort:5556 -v xhs_downloader_volume:/app -it joeanamier/xhs-downloader</code></li>
-<li>API Mode: <code>docker run --name ContainerName(optional) -p HostPort:5556 -v xhs_downloader_volume:/app -it joeanamier/xhs-downloader python main.py server</code></li>
+<li>TUI Mode: <code>docker run --name ContainerName(optional) -p HostPort:5556 -v xhs_downloader_volume:/app/Volume -it &lt;image name&gt;</code></li>
+<li>API Mode: <code>docker run --name ContainerName(optional) -p HostPort:5556 -v xhs_downloader_volume:/app/Volume -it &lt;image name&gt; python main.py api</code></li>
+<li>MCP Mode: <code>docker run --name ContainerName(optional) -p HostPort:5556 -v xhs_downloader_volume:/app/Volume -it &lt;image name&gt; python main.py mcp</code></li>
+<br><b>Note:</b> The <code>&lt;image name&gt;</code> here must be consistent with the image name you used in the first step (<code>joeanamier/xhs-downloader</code> or <code>ghcr.io/joeanamier/xhs-downloader</code>)
 </ul>
 <li>Run Container
 <ul>
@@ -112,7 +120,8 @@
 <li>Run <code>main.py</code> to use</li>
 </ol>
 <h1>🛠 Command Line Mode</h1>
-<p>The project supports command line mode. If you want to download specific images from a text and image work, you can use this mode to set the image sequence number you want to download!</p>
+<p>The project supports command line mode. If you want to download specific images from a text and image works, you can use this mode to set the image sequence number you want to download!</p>
+<p><strong>Note:</strong> When the <code>--index</code> parameter is not set, multiple works links can be passed in. All links must be enclosed in quotation marks and separated by spaces. When the <code>--index</code> parameter is set, multiple works links are not supported. Even if multiple links are passed in, the program will only process the first link!</p>
 <p>You can use the command line to <b>read cookies from the browser and write to the configuration file!</b></p>
 <p>Command example: <code>python .\main.py --browser_cookie Chrome --update_settings</code></p>
 <p>The <code>bool</code> type parameters support setting with <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>, <code>yes</code>, <code>no</code>, <code>on</code> or <code>off</code> (case insensitive).</p>
@@ -121,11 +130,13 @@
 <hr>
 <img src="static/screenshot/命令行模式截图EN2.png" alt="">
 <h1>🖥 Server Mode</h1>
-<p><b>Start:</b> Run the command: <code>python .\main.py server</code></p>
+<p>Server modes include API mode and MCP mode!</p>
+<h2>API Mode</h2>
+<p><b>Start:</b> Run the command: <code>python .\main.py api</code></p>
 <p><b>Stop:</b> Press <code>Ctrl</code> + <code>C</code> to stop the server</p>
 <p>Open <code>http://127.0.0.1:5556/docs</code> or <code>http://127.0.0.1:5556/redoc</code>; you will see automatically generated interactive API documentation!</p>
 <p><b>Request endpoint:</b>
-<code>/xhs/</code></p>
+<code>/xhs/detail</code></p>
 <p><b>Request method:</b>
 <code>POST</code></p>
 <p><b>Request format:</b>
@@ -183,7 +194,7 @@
 <pre>
 async def example_api():
     """通过 API 设置参数，适合二次开发"""
-    server = "http://127.0.0.1:5556/xhs/"
+    server = "http://127.0.0.1:5556/xhs/detail"
     data = {
         "url": "",  # 必需参数
         "download": True,
@@ -197,24 +208,50 @@ async def example_api():
     response = post(server, json=data, timeout=10)
     print(response.json())
 </pre>
+<h2>MCP Mode</h2>
+<p><b>Start:</b> Run the command: <code>python .\main.py mcp</code></p>
+<p><b>Stop:</b> Press <code>Ctrl</code> + <code>C</code> to stop the server</p>
+<h3>MCP Configuration Example</h3>
+
+[//]: # (<h4>STDIO</h4>)
+<h4>Streamable HTTP</h4>
+<p><b>MCP URL:</b><code>http://127.0.0.1:5556/mcp/</code></p>
+<img src="static/screenshot/MCP配置示例.png" alt="MCP Configuration Example">
+<h3>MCP Invocation Example</h3>
+<details>
+<summary>MCP Function and Call Example (Click to Expand)</summary>
+<h4><strong>Retrieve RedNote Works Information</strong></h4>
+<img src="static/screenshot/MCP获取数据.png" alt="MCP Data Retrieval">
+<hr>
+<h4><strong>Download RedNote Works Files</strong></h4>
+<p>When downloading images, you can specify the sequence numbers of the images to download. By default, post information is not returned. If you need the post information, please explicitly state so during the conversation.</p>
+<img src="static/screenshot/MCP下载文件1.png" alt="MCP File Download">
+<hr>
+<img src="static/screenshot/MCP下载文件2.png" alt="MCP File Download">
+</details>
 <h1>📜 Others</h1>
 <ul>
 <li>Due to the date information carried in the links of RedNote works, using links obtained from previous dates may be subject to risk control. It is recommended to use the latest RedNote works links when downloading RedNote work files</li>
 <li>Windows system requires running programs as an administrator to read Chromium, Chrome, Edge browser cookies</li>
-<li>If the function to save works data to a file is enabled, the works data will be stored by default in the <code>./Download/ExploreData.db</code> file</li>
-<li>The program's download records will be stored in the <code>./ExploreID.db</code> file</li>
+<li>If the function to save works data to a file is enabled, the works data will be stored by default in the <code>./Volume/Download/ExploreData.db</code> file</li>
+<li>The program's download records will be stored in the <code>./Volume/ExploreID.db</code> file</li>
+<li>To prevent high-frequency requests from impacting the platform's servers, this project includes a built-in request delay mechanism</li>
 </ul>
 <h1 id="user-scripts">🕹 User Script</h1>
-<p>If your browser has the <a href="https://www.tampermonkey.net/">Tampermonkey</a> browser extension installed, you can add the <a href="https://raw.githubusercontent.com/JoeanAmier/XHS-Downloader/master/static/XHS-Downloader.js">user script</a>(Right click to copy link) to experience the project features without needing to download or install anything!</p>
-<img src="static/screenshot/脚本安装教程.png" alt="">
-<p>After successfully installing the script, open the RedNote page, check the script instructions, and follow the prompts to operate.</p>
+<p>If your browser has the <a href="https://www.tampermonkey.net/">Tampermonkey</a> extension installed, you can use the userscript to try the project's features!</p>
+<p>Userscript links (right-click to copy the link): <a href="https://raw.githubusercontent.com/JoeanAmier/XHS-Downloader/refs/heads/master/static/XHS-Downloader.js">master branch</a>, <a href="https://raw.githubusercontent.com/JoeanAmier/XHS-Downloader/refs/heads/develop/static/XHS-Downloader.js">develop branch</a></p>
 <img src="static/screenshot/脚本安装教程.png" alt="">
 <hr>
+<details>
+<summary>View Tampermonkey userscript screenshots (click to expand)</summary>
 <img src="static/screenshot/用户脚本截图1.png" alt="">
 <hr>
 <img src="static/screenshot/用户脚本截图2.png" alt="">
 <hr>
 <img src="static/screenshot/用户脚本截图3.png" alt="">
+<hr>
+<img src="static/screenshot/用户脚本截图4.png" alt="">
+</details>
 <p>Note: Using the XHS-Downloader user script to batch extract works links, in combination with the XHS-Downloader program, can achieve batch downloading of watermark-free works files!</p>
 <h2>📜 Script Instructions</h2>
 <ul>
@@ -236,7 +273,6 @@ async def example():
     """通过代码设置参数，适合二次开发"""
     # 示例链接
     demo_link = "https://www.xiaohongshu.com/explore/XXX?xsec_token=XXX"
-
     # 实例对象
     work_path = "D:\\"  # 作品数据/文件保存根路径，默认值：项目根路径
     folder_name = "Download"  # 作品文件储存文件夹名称（自动创建），默认值：Download
@@ -250,7 +286,7 @@ async def example():
     record_data = False  # 是否保存作品数据至文件
     image_format = "WEBP"  # 图文作品文件下载格式，支持：AUTO、PNG、WEBP、JPEG、HEIC
     folder_mode = False  # 是否将每个作品的文件储存至单独的文件夹
-    image_download = True  # 图文作品文件下载开关
+    image_download = True  # 图文、图集作品文件下载开关
     video_download = True  # 视频作品文件下载开关
     live_download = False  # 图文动图文件下载开关
     download_record = True  # 是否记录下载成功的作品 ID
@@ -258,10 +294,8 @@ async def example():
     author_archive = True  # 是否将每个作者的作品存至单独的文件夹
     write_mtime = True  # 是否将作品文件的 修改时间 修改为作品的发布时间
     read_cookie = None  # 读取浏览器 Cookie，支持设置浏览器名称（字符串）或者浏览器序号（整数），设置为 None 代表不读取
-
     # async with XHS() as xhs:
     #     pass  # 使用默认参数
-
     async with XHS(
         work_path=work_path,
         folder_name=folder_name,
@@ -298,7 +332,6 @@ async def example():
                 ],
             )
         )
-
 </pre>
 <h1>📋 Read Clipboard</h1>
 <p>The project uses <code>pyperclip</code> to implement clipboard reading functionality, which varies across different systems.</p>
@@ -329,7 +362,7 @@ async def example():
 <td align="center">work_path</td>
 <td align="center">str</td>
 <td align="center">Root path for saving works data/files</td>
-<td align="center">Project root path</td>
+<td align="center">Project root path/Volume</td>
 </tr>
 <tr>
 <td align="center">folder_name</td>
@@ -394,7 +427,7 @@ async def example():
 <tr>
 <td align="center">image_download</td>
 <td align="center">bool</td>
-<td align="center">Switch for downloading image works files</td>
+<td align="center">Switch for downloading image and atlas works files</td>
 <td align="center">true</td>
 </tr>
 <tr>
@@ -487,8 +520,9 @@ async def example():
 <h1>🗳 Download Records</h1>
 <p>XHS-Downloader will store the IDs of downloaded works in a database. When downloading the same works again, XHS-Downloader will automatically skip the file download (even if the works file does not exist). If you want to re-download the works file, please delete the corresponding works ID from the database and then use XHS-Downloader to download the works file again!</p>
 <p>This feature is enabled by default. If it is turned off, XHS-Downloader will check if the file exists. If the file exists, it will skip the download!</p>
-
-# 📦 Build of Executable File Guide
+<h2>Build of Executable File Guide</h2>
+<details>
+<summary>Build of Executable File Guide (Click to Expand)</summary>
 
 This guide will walk you through forking this repository and executing GitHub Actions to automatically build and package
 the program based on the latest source code!
@@ -576,6 +610,7 @@ A:
 A: Due to permission restrictions, you cannot directly trigger Actions from the main repository. Please use the forked
 repository to execute the build process
 
+</details>
 <h1>⭐ Star History</h1>
 <p>
 <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=JoeanAmier/XHS-Downloader&amp;type=Timeline"/>
@@ -627,18 +662,16 @@ repository to execute the build process
 
 # 💰 Project Sponsorship
 
-## JetBrains Tools
-
-![PyCharm logo](https://resources.jetbrains.com/storage/products/company/brand/logos/PyCharm.svg)
-
-<p><b>JetBrains</b> support active projects recognized within the global open-source community with complimentary licenses for non-commercial development.</p>
-
-***
-
 ## DartNode
 
 [![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
 
+***
+
+## ZMTO
+
+<a href="https://www.zmto.com/"><img src="https://console.zmto.com/templates/2019/dist/images/logo_dark.svg" alt="ZMTO"></a>
+<p><a href="https://www.zmto.com/">ZMTO</a>: A professional cloud infrastructure provider offering sophisticated solutions with reliable technology and expert support. We also empower qualified open source initiatives with enterprise-grade VPS infrastructure, driving sustainable development and innovation in the open source ecosystem. </p>
 <h1>⚠️ Disclaimer</h1>
 <ol>
 <li>The user's use of this project is entirely at their own discretion and responsibility. The author assumes no liability for any losses, claims, or risks arising from the user's use of this project.</li>
@@ -662,6 +695,7 @@ repository to execute the build process
 * https://github.com/encode/httpx/
 * https://github.com/tiangolo/fastapi
 * https://github.com/textualize/textual/
+* https://github.com/jlowin/fastmcp
 * https://github.com/omnilib/aiosqlite
 * https://github.com/thewh1teagle/rookie
 * https://github.com/carpedm20/emoji/
