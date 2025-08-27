@@ -10,6 +10,7 @@ from fastmcp import FastMCP
 from typing import Annotated
 from pydantic import Field
 
+import random
 # from aiohttp import web
 from pyperclip import copy, paste
 from uvicorn import Config, Server
@@ -229,8 +230,10 @@ class XHS:
         else:
             logging(log, _("共 {0} 个小红书作品待处理...").format(len(urls)))
         # return urls  # 调试代码
-        return [
-            await self.__deal_extract(
+        results = []
+        for i in urls:
+            await sleep(random.uniform(3, 10))  # 随机暂停3~10秒
+            result = await self.__deal_extract(
                 i,
                 download,
                 index,
@@ -238,8 +241,19 @@ class XHS:
                 bar,
                 data,
             )
-            for i in urls
-        ]
+            results.append(result)
+        return results
+        # return [
+        #     await self.__deal_extract(
+        #         i,
+        #         download,
+        #         index,
+        #         log,
+        #         bar,
+        #         data,
+        #     )
+        #     for i in urls
+        # ]
 
     async def extract_cli(
         self,
